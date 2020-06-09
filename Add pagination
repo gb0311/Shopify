@@ -1,0 +1,36 @@
+Add pagination
+
+Hello, and thank you for downloading instructions for “Add Pagination for Clean and Organized Website”. By the end of this document, you will be able to add pagination to your website. 
+
+Step 1: Duplicate your current live theme
+
+From your Shopify admin go to the Online Store and then click on Themes. To be secure we recommend you to make a duplicate of your current live theme. 
+[insert screenshot]
+
+Click on actions and from the drop-down menu choose duplicate. Once the duplicate is made, again click on Actions but this time choose Edit code. 
+
+Step 2: Adding code
+
+	you will see that is something easy to do, first start to open your theme clicking in “Actions” and then click in “edit code”, you will see here all the files that makes that your site works, so now we have to find the template where we want the pagination feature added.
+for example in Collection.template, so find exactly where you want it  (Could be under the products, or at top, and place the code there 
+
+{%- paginate collection.products/blog.articles by 5 -%}
+  {%- for product in collection.products -%}
+    <!-- show product details here -->
+  {%- endfor -%}
+
+  {{ paginate | default_pagination: next: 'Older', previous: 'Newer' }}
+{%- endpaginate -%}
+
+
+check that in the first line of this code we will have to specify the type of content you want to paginate in this case how we are pagination products in collection we use collection.products but if we want to paginate articles in blog we will use “blog.articles”  and also we have to add the limit that you want to paginate for example 5 in this case, but could be the number that you want, keep in mind that while bigger its this number less optimization will have your site
+
+Step 3: Testing
+
+Ok, finally we added the code in our template, so now its time to see the results, for that we have to open our site in a new tab and check where we added this, in this case was in a collection template, so we have to open the collection in our site, and check that all is working properly
+
+
+
+
+
+
