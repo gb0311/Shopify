@@ -1,0 +1,47 @@
+Custom Font installation
+
+Hello and thank you for downloading the instructions for adding a new font in our store.
+There are a lot of stores that are using the same font style. Getting it from the fonts that the theme provide us, this is making a lot of similar stores with the same style. To not have the same boring page than your competitors ;) we will work on how we can add a new font in your theme
+
+Step 1: WHAT WE NEED
+
+
+Let's start talking about what do you need, basically, you have to start downloading the font that you want to add.
+IMPORTANT THINGS: The file that you downloaded should have at least.WOFF and .WOFF2 files types, and also and super important .TTF and .OTF extensions are not WEBFONTS files types, so if you don't have the . WOFF and .WOFF2 files type of your font you will need to find it 
+
+Step 2: WHERE WE CAN GET these FONTS
+
+If you don't have the font files that we will need, you have to find it. If you know the font name you can google it and find the right files. But if you don't know which font exactly you want we can use for example this site https://google-webfonts-helper.herokuapp.com/ to find a new font and then download it!
+(We will add more pages to download the fonts in video description)
+
+Step 3: Preparing 
+
+Ok, let’s start with the most entertaining part. When we are in our store, we need to go to “Online Stores” section, where we will find all of our themes where we worked before and also our Live theme, we always recommend to duplicate the live theme (or the theme where we want to edit) before starting to work, doing this you will save your old work and always will go back, to duplicate your theme, click on “Actions”, then select “Duplicate”, and if you want to rename the new theme created, click on “Actions” and “Rename”.
+
+Step 4: Starting to code
+
+	In the new theme that we created, click again in “Actions” and then select “Edit code”, you’ll see each component that is part of our site. On our left side we will have a sidebar with different options, we need to select “Assets”, and find the file called “stylesheet.css.liquid”, then scroll to the bottom and paste the code that we added in the document.
+
+@font-face {
+  font-family: "NAME OF FONT";
+  src: url("NAME-OF-FONT-FILE.woff2") format("woff2"),
+       url("NAME-OF-FONT-FILE.woff") format("woff");
+} 
+
+Then we need to replace some parts of this code to be adapted to our theme, we need to change where it says “NAME OF FONT” by our font name and also where its say “NAME-OF-FONT-FILE” by our font file name (Special attention on this part you have to knows than this file name is case sensitive and also should have the hyphens exactly how it's in your computer.
+Now we have to add the following code below this
+		
+your css selector here { font-family: "NAME OF FONT" !important; }
+
+When it says “your CSS selector here” you have to add the HTML tag or where exactly you want this font to be applied, Using code we need to tell the theme what headings or text will use our new font. In a new browser tab go to your website and find the heading or text you want in this font, in this example it is a heading. Right-click on the words and select Inspect, A window will pop up showing you the code of the site. Look in the right-hand column for the CSS code that is styling your heading. In the example above you will see on the left, highlighted in grey, the heading is an <h2> and on the right, the CSS property selector for the heading is .X h2. Click the property name (circled above) and copy the text
+Go back to the browser tab with the theme code editor and open the stylesheet.css.liquid file again. Select the words that say "your CSS selector here" and paste what you have already copied. Then replace "NAME OF YOUR FONT" with the name you used before. 
+
+Save your changes, refresh your website and have a look at your custom font.
+
+
+ https://www.w3schools.com/cssref/css_selectors.asp
+
+
+
+
+
