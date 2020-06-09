@@ -1,0 +1,126 @@
+Tabbed in product description
+
+Hello, thank you for downloading our guide about how we can add tabs to our product description. Follow the next simple steps to accomplish your goal easily. 
+
+Step 1: check JQuery
+
+To make this happening, we will need to be sure that JQuery library is added in our code. We will need to check inside the tag <head> in theme.liquid if the next code is there. If it’s not, we need to add it :
+
+ <script src="//code.jquery.com/jquery-1.11.3.js"></script>
+
+Step 2: Add HTML code to your product page
+
+Now we need to add some HTML code to your product page. To do that, go to the Products section in your admin panel, and then select the product that you want to edit. Once you are in, you need to select this icon <>, where you will see the HTML code that will be injected in your product description, copy and paste the code that we added in our document: 
+
+<div class="cgt-desc">
+ <ul class="tabs clearfix">
+ <li><a href="#tab-1" class="active">Description</a></li>
+ <li><a href="#tab-2">Size Chart</a></li>
+ <li><a href="#tab-3">Shipping & Return</a></li>
+ <li><a href="#tab-4">Videos</a></li>
+ </ul>
+ <div class="cgt-content">
+ <div id="tab-1" class="tab active">
+ Enter Product Description Over Here.
+ </div>
+ <div id="tab-2" class="tab">
+ Enter Size Chart Over here table, images, etc.
+ </div>
+ <div id="tab-3" class="tab">
+ Enter Shipping & Returns details over here.
+ </div>
+ <div id="tab-4" class="tab">
+ Enter youtube video , vimeo ,etc embed code.
+ </div>
+ </div>
+ </div>
+
+Step 4:  Add JS
+
+ Adding the logic for the tabs is quite easy. Open up your product.liquid template file, then we need to go at the bottom of the file and paste the following code :
+
+<script>
+ $(document).ready(function() {
+ $('ul.tabs').each(function(){
+ var active, content, links = $(this).find('a');
+ active = links.first().addClass('active');
+ content = $(active.attr('href'));
+ links.not(':first').each(function () {
+ $($(this).attr('href')).hide();
+ });
+ $(this).find('a').click(function(e){
+ active.removeClass('active');
+ content.hide();
+ active = $(this);
+ content = $($(this).attr('href'));
+ active.addClass('active');
+ content.show();
+ return false;
+ });
+ });
+ });
+ </script>
+
+Step 5: Adding CSS
+
+Now, in the same template as before, we will add the next code that will add the style to our tabs:
+
+<style>
+ .cgt-desc{
+ font-family: Arial;
+ }
+ 
+ .cgt-desc ul.tabs{
+ margin: 0px;
+ padding: 0px;
+ border-radius: 0px;
+ top: 1px;
+ position: relative;
+ }
+ .clearfix{
+ clear: both;
+ }
+ 
+ .cgt-desc ul li{
+ background-color: #fff;
+ display: inline-block;
+ position: relative;
+ z-index: 0;
+ border-radius: 0px;
+ margin: 0 -5px;
+ padding: 0;
+ }
+ 
+ .cgt-desc ul li:first-child{
+ margin: 0px;
+ }
+ 
+ .cgt-desc ul li a{
+ display: inline-block;
+ border: 1px solid #e9e9e9;
+ padding: 1.2em 1em;
+ font-weight: 700;
+ color: #515151;
+ text-decoration: none;
+ font-size: 12px;
+ text-transform: uppercase;
+ }
+ 
+ .cgt-desc ul li a.active{
+ background: #fafafa;
+ border-bottom-color: #fafafa;
+ }
+ 
+ .cgt-desc .tab{
+ display: block;
+ border: 1px solid #e9e9e9;
+ padding: 15px;
+ background: #fafafa;
+ font-size: 14px;
+ border-radius: 0px;
+ }
+ </style>
+
+Step 6: Testing
+
+Now it's time to check if everything is working properly, and all we can say is good job! 
