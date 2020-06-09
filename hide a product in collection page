@@ -1,0 +1,76 @@
+Hide a product in the collection page
+
+Hi, thank you for downloading our instructions on how to hide a product in the collection page using tags. We will explain to you how to do it in your store in a few steps. 
+
+Step 1: starting
+We always recommend making a copy of your theme. Once you are in your admin panel, you have to go to Online stores, and in the theme where you want this new feature, click Actions, and then click Duplicate. When you have done this part, you can start to develop.
+Step 2: recommendations
+
+If you want to duplicate your template you have to click on online stores, then in the new theme select actions, and now Edit code. There we have to go under the Template directory on your left sidebar and click on add new template. Click collection in the first field, and then add the name of this template. Once we did this, we have to create a new section, so, to do that we have to go under the Sections and click Add a new section. In the new popup, you will have to write the name of our new section, for example,
+“collection-hidden-products” and then click Create section. Now we have to copy and paste, in this new section, the code that is in “collection-template.liquid” (you will find it also under the Section directory). Once we copy and paste the text, we have to go back to our new template and change the name of the section that is added in the last line (add the new section name that we created). When we have done this, we can start to work on this new template.
+
+Step 3: Finding where 
+
+In our duplicated theme, click  Actions, and then click  Edit code. Find a file called “collection-template.liquid”, you will see it under the Sections directory in your left sidebar. It is open, and we find out where exactly the products were added.  
+
+Step 4: Brief explanation
+
+We will have our first template where each component is called from there. If we are talking about the homepage, we have our first template and inside of it, we have all the sections added (the section that we add in customizer). In the case of collections, we are talking about a template, and this template is calling for each product a new process that shows each product. This process knows how should be displayed. To do that we have to identify where in the process or snippets. It is made this way for efficiency, instead of having the same code repeated, just with one line we will call for these snippets in different parts of code. In the collection page, where we are working on, we will have snippets where the products are added. These snippets can be called  “product-grid-item.liquid”.
+
+If you did not find this file, don't worry, it can be called different. These are the possibilities:
+
+product-card.liquid
+product-card-grid.liquid
+product-loop.liquid
+
+Step 5: adding code
+
+Once we have a picture about how the code works, and we know where is this snippet, we have to add the next code above the call and below the for loop of products:
+
+{% assign show-it = true %}        
+       {% for tag in product.tags %}
+        	{% if tag == "yourTagName" %}
+        	    {% assign show-it = false %}
+        	{% endif %}
+        {% enfor %}
+  {% if show-it == true %}
+
+you should change your TagName by the same text that you will add in your product tag, then also, do not forget to add an {% endif %} after the snippet call. Should look like this: 
+
+
+{% for product in collection.products %}
+        	{% assign show-it = true %}        
+        	{% for tag in product.tags %}
+        		{% if tag == "yourTagName" %}
+        			{% assign show-it = false %}
+        		{% endif %}
+        	{% endfor %}
+      
+        {% if show-it == true %}	
+          <li class="list-view-item">
+            {% include 'product-card-list', product: product, show_vendor: section.settings.show_vendor %} //HERE IS WHERE THE CARD IS ADDED
+          </li>
+        {% endif %}
+        {% else %}
+
+Check, in red i added the {% endif %} needed to close the first red line
+
+
+Don't worry if it’s not exactly the same, just need to be sure that the structure should look similar to this. 
+
+Step 6: Adding tags
+
+Now in our admin panel in Shopify, we have to go to Products, then select the product that we want to hide, and on our right side we will find a box to add Tags. Here we have to write the same text that we added in code "yourTagName". Click Add and then click Save.
+
+Step 7: add the new collection template 
+
+Now we have to add the new collection template to the collection where we want this feature to work. To do that, in Shopify admin go to Products, and then click on Collections. Now select the collection that you want to edit, and on our right side we will find a box to select the template (to see this new template in the list, the theme should be published, once we do that we will see it in that dropdown). In this box select the new template and then click on Save.
+
+Step 8: Testing
+
+Open our site in a new tab and open the collection where we worked in, and you shouldn’t be able to see the products with this tags. Good job.
+
+
+
+
+
