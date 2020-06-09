@@ -1,0 +1,51 @@
+Add infinite scroll
+
+Hi, and thanks to download our guide about how we can add infinite scroll, with this feature you will increase you store optimization and your store will look so professional. 
+
+Step 1: Starting
+
+in our first step we will add Ajax to our theme code, for that we have to prepare our theme, open our Admin store and go to “Online stores” where you will see your themes there, so we always recommend that you duplicate the theme where you will working in, so for that click on “Actions” in the right theme and then click on Duplicate, also on this way you will have a backup
+
+Step 2: Adding AJAX
+
+Now its time to add AJAX to our new theme, clicking on “Actions” and then on “Edit code”, you will see all of your theme code there, in the left hand you will see this sidebar menu with all of your files, before continue you have to know that if you are USING SLATE you have to paste the AJAX code in your asset called “Vendor.js”, if not, you have to go to “Assets” and then click on “Add a new Asset” then a new pop up will appear and you have to select the AJAX file to be added.
+
+Step 3: Call to the new asset
+
+once you finished uploading the new asset, we have to add some code to call the new file in our theme, for that we have to add this line of code, before the closing bodi tag </body> in our Theme.liquid
+
+{{ 'ajaxinate.min.js' | asset_url | script_tag }}
+
+
+Step 4: Setup your collection
+
+now, where you want the new feature, you have to add the next code, check that you can add this code where you want, for example in a collection page or in a blog template, or for example in a gallery where you want this infinite scroll, so we open the template where we want this feature and we will add the next code there
+
+{% paginate collection.products by 3 %}
+    <div id="AjaxinateLoop" >
+      {% for product in collection.products %}
+        {% include 'product-grid-item' %}
+      {% endfor %}
+    </div>
+
+    <div id="AjaxinatePagination">
+      {% if paginate.next %}
+        <a href="{{ paginate.next.url }}">Loading More</a>
+      {% endif %}
+    </div>
+{% endpaginate %}
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var endlessScroll = new Ajaxinate({
+    container: '#AjaxinateLoop',
+    pagination: '#AjaxinatePagination'
+  });
+});
+</script>
+
+Step 5: Check the new feature
+
+And thats all, now rest to check if the code its working, for this we will go to a new tab and open page where we added this code, (collection, blog, etc) and when we start to scroll down we have to see the new feature working!
+
