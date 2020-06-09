@@ -1,0 +1,31 @@
+Add a sold out text when an item is out of stock
+
+Hi, and thanks for downloading our guide about how we can add a sold out text, sometimes its really necessesary that we add this sold out text, so this will help your customer to not do innecessary clicks on your store and helping to find the right product quickly, lets start.
+
+
+Step 1: starting
+
+We always recommend start making a copy of your theme where you will working on , so for that. Once you are in your admin panel, you have to go to “Online stores” and in the theme where you want this new feature, click on “actions” button, and then click on “Duplicate”, once you have done this part you can start to develop
+
+Step 2: Adding code
+
+now we have to edit our code, for that we have to click in “actions” button and then click on “edit code”, now you will see all of your files that are the components of your site, so, to continue we have to add some code, to do that we need to find the next snippet called: “product-grid-item.liquid” 
+
+If you did not find this file, don't worry can be called different, this possibilities are:
+
+product-card.liquid
+product-card-grid.liquid
+product-loop.liquid
+
+now we have to finde where is the price added for that you can open your site in a new tab open your collection where you will install this feature, and do right click over the price, then click on Inspect element and you will see the HTML code in a new bar that's appear, so find the the name of our class in my case the name of the class is “price price--listing”, and now i have to find it in the code, goig back to our code, im looking for this class, once i get where was it i need to add some liquid code, start to pasting this part above of the price 
+
+{% if product.available %}
+
+and then, just below the price i’ll add the next part 
+
+{% else %}
+  	<p> Sold out! </p>
+ {% endif %}
+so, with this code we are saying if the product its available, then show the regular price, but if the product its not available, then show “sold out!! message
+
+and thats all so easy not forget that you can add some class to our message to add a better styling , how your last step is open your site in a new tab test if all is working fine. thanks again!
