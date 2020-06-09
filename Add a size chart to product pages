@@ -1,0 +1,69 @@
+Hi, thank you for downloading the instructions on how we can add a size chart to product pages. Follow the next simple steps to achieve your goal easily.
+
+Step 1: starting
+First thing, we recommend you make a copy of your theme. In your admin panel, go to the Online stores, and in the theme where you want this new feature, click Actions, then click Duplicate. When you have done this part, you can start to develop.
+Step 2: Creating a size chart page
+
+We need to start with creating our size chart page. Go to the Online stores, then to the Pages. Click add page and add the page title. In the content box create a table and customize it to look the way you want it to.
+
+Step 3: Adding the size chart to your theme
+
+In the theme which we created in the first step, click Actions and then click Edit code. In the Sections directory, find and open your product-template.liquid file. Add a Size chart button by pasting the following code above the Add to cart button.
+
+{% if product.options contains 'Size' %}
+<a class="btn size-chart-open-popup" href="#size-chart">See size chart</a>
+{% endif %}
+
+Step 4: Adding Style
+
+We always recommend creating a new asset. There we will save our new style. Go to the Assets and click Add a new asset. Change to create a blank file tab and complete the new file name. Leave the extension like .scss, then click add asset. In our new asset paste the next code:
+
+#size-chart {
+  border: 2px #555 solid;
+  background-color: #ffffff;
+  padding: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+After adding it, call this CSS to our theme. Open the file called theme.liquid and paste the next code there, between the <head> tags.
+
+ {{ ‘Asset-File-Name.scss.css' | asset_url | stylesheet_tag }}
+
+Asset-File-Name.scss.css is the name of the file we created before. 
+The other way to do this in a simple way, but not in clean code, is pasting the next code :
+
+<style>
+#size-chart {
+  border: 2px #555 solid;
+  background-color: #ffffff;
+  padding: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+Doing this, you don't have to call the asset file, but it will be more difficult to find the code if you add all of the codes in the same file. 
+
+Step 4: Adding pop up functionality
+
+In the Assets directory, find the JS called theme.js and paste the next code at the very bottom.
+
+$('.size-chart-open-popup').magnificPopup({
+  type:'inline',
+  midClick: true
+});
+
+If the size chart isn’t appearing, you might need to add some extra code to your theme.
+
+In the Assets directory, click to open your theme.scss.liquid file, or your timber.scss.liquid file, and add MagnificPopup.css to the bottom.
+
+Do one of the following:
+
+If your theme has a vendor.js file in the Assets directory, open the file and add  MagnificPopup.js code to the bottom.
+If your theme does not have a vendor.js file in the Assets directory, place this code just above the $('.size-chart-open-popup').magnificPopup code in your theme.js file.
+Click Save.
+
+Check if it’s working and that will be all. Well done!
+
