@@ -1,0 +1,76 @@
+Swatch color in product page
+
+Hi, and thanks to downloading our instructions about how to add swatch color in your product page. some themes comes with this feature, but there are other that doesnt comming with it, so, here we will learn how we can add this feature in a few steps
+
+Step 1: starting
+
+We always recommend start making a copy of your theme where you will working on , so for that. Once you are in your admin panel, you have to go to “Online stores” and in the theme where you want this new feature, click on “actions” button, and then click on “Duplicate”, once you have done this part you can start to develop
+
+Step 2: creating snippet
+
+now in your new duplicated theme click on “actions” and then click on “edit code”, now in your left sidebar, under “snippets” click on “Add a new snippet” then, add the name “swatch.liquid” and then paste the code that its in the file attached on this tutorial.
+
+Step 3: Adding the colors in our product page
+
+once we created and added the code in our new swatch snippet, we have to paste the next code where we want it and pay attention that each code its for differents product options, you should select the code that you want to add or customize your code to be adapted to your own product options.
+
+For example, use this code if your product has a Color option:
+
+{% if product.available and product.variants.size > 1 %}
+ {% include 'swatch' with 'Color' %}
+{% endif %}
+------------
+If you want to use the button treatment on a Size option, use this:
+
+{% if product.available and product.variants.size > 1 %}
+ {% include 'swatch' with 'Size' %}
+{% endif %}
+------
+If you want to apply the button or swatch treatment to all your product options, use this:
+
+{% if product.available and product.variants.size > 1 %}
+  {% for option in product.options %}
+    {% include 'swatch' with option %}
+  {% endfor %}
+{% endif %}
+
+And if you want the code for a different product option you have to change “YourOption” in the next code by the name of your product option
+
+{% if product.available and product.variants.YourOption > 1 %}
+ {% include 'swatch' with 'YourOption' %}
+{% endif %}
+
+Step 4: Add code on theme.liquid file
+
+Now under layout directory in our left sidebar, we have to open the file called “theme.liquid” and at bottom above the </body> tag we have to paste the next code
+
+<script>
+jQuery(function() {
+  jQuery('.swatch :radio').change(function() {
+    var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+    var optionValue = jQuery(this).val();
+    jQuery(this)
+      .closest('form')
+      .find('.single-option-selector')
+      .eq(optionIndex)
+      .val(optionValue)
+      .trigger('change');
+  });
+});
+</script>
+
+ Step 5: Sold out feature
+
+Now we have to add the Sold out feature for that we have to add the soldout.png to our Assets file, for that go under “Assets” in our left sidebar and click on “Add a new asset” then a pop up will open, select “choose file” and find the file called soldout.png
+
+Step 6: Adding CSS
+
+Now just remains add our css file for that go to Assets again and click on “Add a new Asset” then select “Choose file” and open the file that was attached in this tutorial, the file is called “devst-styles.css” once you did this you have to go to theme.liquid file (the same than before) and above the </head> label, you have to paste the next code, with this code you are saying to your site, that you need this styles to be applied to your new feature
+
+  {{ 'devst-styles.css' | asset_url | stylesheet_tag }}
+
+Step 7: Testing
+
+And thats all, now just remains to test your site, so, for that open a product with variants and check that all its working, and for solduot feature you have check the product when a variant have 0 products in stock and also the continue selling when stock is 0 its not activated
+
+
