@@ -1,0 +1,21 @@
+TUTORIAL: How to add mobile zoom - BROADCAST THEME
+
+- https://help.invisiblethemes.com/article/65-tutorial-how-to-add-mobile-zoom
+
+Posibble than the "Modernizr" is not definide could be changed by -> window.theme.touch
+
+to use same lightbox zoom feature in Desktop and Mobile
+
+
+initZoom: function() {
+
+        $('[data-mfp-mobile-src]', this.$container).each( function(){
+          var $mfpSrcElement = $(this);
+          var mfpSrc = $mfpSrcElement.attr('data-mfp-mobile-src');
+          $mfpSrcElement.magnificPopup({
+            items: {
+              src: mfpSrc
+            },
+            type: 'image' 
+          });
+        });
