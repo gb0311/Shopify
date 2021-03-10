@@ -1,0 +1,61 @@
+HOW TO ADD CONTACT US FORM IN PRODUCT PAGE
+
+Code to be added in product-form.liquid
+------------------------------
+1. Check if this product need this feature, in this case was used to the products that was just available in store.
+{% assign unavailable-to-buy = false %}
+{% for tag in product.tags %}
+	{% if tag == 'buy-in-store' %}
+		{% assign unavailable-to-buy = true %}
+	{% endif %}
+{% endfor %}
+
+--------
+2. The code with the contact form to contact the store owner
+
+  {% if unavailable-to-buy %}
+  <p class="error">{{ 'contact.form.product_available_on_request' | t }}</p>
+    {% form 'contact' %}
+      {% if form.posted_successfully? %}
+      	<p class="note note--success">{{ 'contact.form.post_success' | t }}</p>
+      {% else %}
+     	<p> {{ 'contact.form.fill_form' | t }}</p>
+	  {% endif %}
+      {% if form.errors %}
+      <div class="error feedback">
+        <p>{{ form.errors | default_errors }}</p>
+      </div>
+      {% endif %}
+      {% unless form.posted_successfully? %}
+      <div class="notify-me-wrapper clearfix">
+        <input type="email" id="ContactFormEmail-{{ section.id }}" class="input-full" name="contact[email]" autocorrect="off" autocapitalize="off" placeholder="Enter your email address" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" style="border:1px solid #ff7200; margin-bottom: 15px;">
+        <input type="hidden" class="email-body" name="contact[body]" value="Please contact me about {{product.title}} - {{product.selected_or_first_available_variant.title}}" id="variant-id">
+        <input type="hidden" id="productTitle" value="{{product.title}}">
+  		</div>
+              <button type="submit" class="btn btn--full" style="margin-bottom: 15px">
+              {{ 'contact.form.send' | t }}
+            </button>
+      {% endunless %}
+    {% endform %}
+  {% endif %}
+
+
+----------------
+3. Snipper to add the variant in Email body. if this is not required. there is a field that can be removed from the step 2
+
+Snipper call-  
+	<script src="{{ 'contact-variant.js' | asset_url }}" defer="defer"></script>
+
+-code
+	 $( document ).ready(function() {
+  	var variantsSelectors = document.querySelectorAll('.variant-input');
+   	variantsSelectors.forEach(function(variant){
+      $(variant).on('click', (elem) => {
+      	var value = $(elem.currentTarget).attr('data-value');
+      	var productTitle = $("#productTitle").val();
+        console.log(productTitle);
+        $("#variant-id").val("Please contact me about " + productTitle + " - " + value);
+		
+      }  ); 	
+   });
+  });
