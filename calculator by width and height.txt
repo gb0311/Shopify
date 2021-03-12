@@ -1,0 +1,122 @@
+CALCULATOR -  this calculator is used to calculate the quantity of panels that you need to cover a wall - from wall width and wall height 
+
+in product template we have to add the fields to catch the sizes. paste the next code there where you want to be displayed:
+
+<hr class="calculator-separator">    
+            <p class="calculator-title">How many panels do I need? Calculate below</p>
+            <div class="input-box">
+              <label for="width-input">Enter your width measurement (cm)</label>
+    	      <input required type="text" id="width-input" class="input-text" name="widthinput" value="" placeholder="e.g 630"/>
+            </div>
+               
+            
+            <div class="input-box">
+              <label for="height-input">Enter your height measurement (cm)</label>
+    	      <input required type="text" id="height-input" class="input-text" name="heightinput" value="" placeholder="e.g 170"/>
+		    </div>
+            
+            <span id="height-msg" class="feedback-message"></span> 
+            
+                    
+<hr class="calculator-separator">    
+
+then, at bottom the call to JS
+
+{% include 'calculator-driver-cms', current_variant %}
+
+create a new snippet and paste the next code there 
+
+<script type="text/javascript">
+  var width_val = parseFloat($("#width-input").val()) ;
+  var height_val = parseFloat($("#height-input").val());
+  var new_qnty = 0
+  var panel_height = 0;
+  
+  $("#height-input").change(function(){ 
+  	height_val = parseFloat($("#height-input").val());
+	
+    if(height_val < 250){
+	  selectOption(250);
+      panel_height = "250";
+
+	}
+    if(height_val > 249 && height_val < 275){
+      selectOption(275);
+      panel_height = "275";
+	}
+
+    if(height_val > 274 && height_val < 300){
+      selectOption(300);
+      panel_height = "300";
+	}
+  
+  
+    if(height_val > 299){
+      selectOption(325);
+      panel_height = "325";
+	}
+	
+    width_val = parseFloat($("#width-input").val()) / 100;
+    new_qnty = Math.ceil(width_val/0.90);
+    console.log(!(isNaN(width_val)));
+    if (!(isNaN(width_val)) && !(isNaN(height_val)) ) {
+		$("#width-msg, #height-msg").removeClass('hide')
+        $("#width-msg, #height-msg").text("We recommend " + new_qnty + " panels of " + panel_height + " centimeters.");
+        $("#Quantity").val(new_qnty);
+      
+    } else { $("#width-msg, #height-msg").addClass('hide')};
+
+});
+  
+  function selectOption(id) {
+	var value = id + "cm";
+    var options = document.querySelectorAll("#SingleOptionSelector-0 option");
+
+    var optionsAjax = document.querySelectorAll("#ProductSelect-product-calculator-cms option"); 
+
+    options.forEach(function(o){
+      if ($(o).val() === value) {
+      	$(o).attr("selected","selected");
+      } else { 
+      $(o).removeAttr("selected");
+	} 
+	});
+
+    optionsAjax.forEach(function(oA){
+      var aux = $(oA).text().replace(' ',''); 
+      if ($(oA).text().includes(value)) {
+      	$(oA).attr("selected","selected");
+		$('select.single-option-selector-product-calculator-cms').val(value);
+		var event = new Event('change');
+		var element = document.getElementById('SingleOptionSelector-0');
+        element.dispatchEvent(event);
+      } else { 
+      $(oA).removeAttr("selected");
+	} 
+	});
+  }
+  
+  
+  $("#width-input").change(function(){
+   	 width_val = parseFloat($(this).val()) / 100;
+     console.log("width_val "+ width_val );
+     new_qnty = Math.ceil(width_val/0.90);
+     console.log("New Quantity "+ new_qnty );
+     if (!(isNaN(width_val)) && !(isNaN(height_val)) ) {
+		$("#width-msg, #height-msg").removeClass('hide')
+       	$("#width-msg, #height-msg").text("We recommend " + new_qnty + " panels of " + panel_height + " centimeters.");
+        $("#Quantity").val(new_qnty);
+      
+    } else { $("#width-msg, #height-msg").addClass('hide')};
+     
+  });
+
+</script>
+
+
+COMMENT:
+The next code is used to force a change event in the select input to change the price
+
+var event = new Event('change');
+var element = document.getElementById('SingleOptionSelector-0');
+element.dispatchEvent(event);
